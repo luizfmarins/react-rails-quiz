@@ -54,7 +54,18 @@ class QuizController < ApplicationController
   end
 
   def create
-    redirect_to '/results'
+    questionIndex = params[:questionIndex].to_i;
+    quizChoice = params[:quizOption];
+
+    if (quizChoice.present?)
+      updateAnswer(questionIndex, quizChoice);
+
+      session[:answers].persist()
+
+      redirect_to '/results'
+    else
+      redirect_to quiz_path
+    end
   end
 
   def updateAnswer(questionIndex, quizChoice)
