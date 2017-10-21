@@ -8,8 +8,12 @@ class QuizController < ApplicationController
       questionIndex = params[:questionIndex].to_i;
       quizChoice = params[:quizOption];
 
-      session[:answers].setAnswer(questionIndex, quizChoice);
-      @presenter = presenter(questionIndex+ 1);
+      if (quizChoice.present?)
+        updateAnswer(questionIndex, quizChoice);
+        @presenter = presenter(questionIndex + 1);
+      else
+        @presenter = presenter(questionIndex);
+      end
     end
   end
 
@@ -40,11 +44,15 @@ class QuizController < ApplicationController
           ]}
       ],
       :questionIndex => questionIndex,
-      :isFinalQuestion => questionIndex === 5,
+      :isFinalQuestion => questionIndex === 1,
       :form => {
         :action => 'quiz'
       }
     };
+  end
+
+  def updateAnswer(questionIndex, quizChoice)
+    session[:answers].setAnswer(questionIndex, quizChoice);
   end
 
   def isFirstAccess()

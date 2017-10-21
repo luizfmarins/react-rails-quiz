@@ -21,6 +21,10 @@ var OptionList = React.createClass({
   handleSubmit: function (event) {
   },
 
+  buttonText: function () {
+    return this.state.isFinalQuestion ? "Done" : "Next";
+  },
+
   render: function () {
     var self = this;
 
@@ -35,7 +39,7 @@ var OptionList = React.createClass({
         <form ref="form" action={this.state.form.action} method="get" onSubmit={this.handleSubmit}>
           {optionNodes}
           <input type="hidden" name="questionIndex" value={this.state.questionIndex} />
-          <button type="submit">Next</button>
+          <button type="submit">{this.buttonText()}</button>
         </form>
       </div>
     )
