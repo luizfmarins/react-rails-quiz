@@ -1,8 +1,16 @@
 class QuizController < ApplicationController
   def index
     @presenter = {
-      :id => 'op1',
-      :question => 'Option 1'
+      :quizOptions => [
+        {
+          :id => 'op1',
+          :text => 'Option 1'
+        },
+        {
+          :id => 'op2',
+          :text => 'Option 2'
+        }
+      ]
     }
   end
 end
