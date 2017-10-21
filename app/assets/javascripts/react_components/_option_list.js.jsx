@@ -25,10 +25,22 @@ var OptionList = React.createClass({
     return this.state.isFinalQuestion ? "Done" : "Next";
   },
 
+  formAction: function () {
+    return this.state.form.action;
+  },
+
+  questions: function () {
+    return this.state.quizQuestions[this.state.questionIndex];
+  },
+
+  questionIndex: function () {
+    return this.state.questionIndex;
+  },
+
   render: function () {
     var self = this;
 
-    var optionNodes = this.state.quizQuestions[this.state.questionIndex].quizOptions.map(function (op) {
+    var optionNodes = this.questions().quizOptions.map(function (op) {
       return <QuizOption opId={op.id} text={op.text}
                          handleOptionChange={self.handleOptionChange}
                          getSelectedOption={self.getSelectedOption}/>
@@ -36,9 +48,10 @@ var OptionList = React.createClass({
 
     return (
       <div>
-        <form ref="form" action={this.state.form.action} method="get" onSubmit={this.handleSubmit}>
+        <form ref="form" action={this.formAction()} method="get" onSubmit={this.handleSubmit}>
           {optionNodes}
-          <input type="hidden" name="questionIndex" value={this.state.questionIndex} />
+          <input type="hidden" name="questionIndex"
+                 value={this.questionIndex()}/>
           <button type="submit">{this.buttonText()}</button>
         </form>
       </div>
