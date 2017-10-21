@@ -1,10 +1,16 @@
 class QuizController < ApplicationController
+
   def index
-    questionIndex = params[:questionIndex].present? ? params[:questionIndex] : "-1";
+    if (isFirstAccess())
+      @presenter = presenter(0);
+      session[:answers] = Answers.new;
+    else
+      questionIndex = params[:questionIndex].to_i;
+      quizChoice = params[:quizOption];
 
-    questionIndex = questionIndex.to_i + 1;
-
-    @presenter = presenter(questionIndex);
+      session[:answers].setAnswer(questionIndex, quizChoice);
+      @presenter = presenter(questionIndex+ 1);
+    end
   end
 
   def presenter(questionIndex)
@@ -34,10 +40,14 @@ class QuizController < ApplicationController
           ]}
       ],
       :questionIndex => questionIndex,
+      :isFinalQuestion => questionIndex === 5,
       :form => {
         :action => 'quiz'
       }
     };
   end
 
+  def isFirstAccess()
+    return !params[:questionIndex].present?;
+  end
 end
