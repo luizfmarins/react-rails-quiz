@@ -6,7 +6,7 @@ var QuizOption = React.createClass({
   render: function () {
     return (
       <div>
-        <input type="radio" value="op1">Option 1</input>
+        <input type="radio" value="op1">{this.state.question}</input>
       </div>
     )
   }
