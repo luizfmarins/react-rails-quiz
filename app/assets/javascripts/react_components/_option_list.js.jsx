@@ -26,7 +26,7 @@ var OptionList = React.createClass({
   },
 
   formAction: function () {
-    return this.state.form.action;
+    return this.state.form.nextQuestionAction;
   },
 
   questions: function () {
@@ -35,6 +35,10 @@ var OptionList = React.createClass({
 
   questionIndex: function () {
     return this.state.questionIndex;
+  },
+
+  formMethod: function () {
+    return !this.state.isFinalQuestion ? "get" : "post";
   },
 
   render: function () {
@@ -48,7 +52,7 @@ var OptionList = React.createClass({
 
     return (
       <div>
-        <form ref="form" action={this.formAction()} method="get" onSubmit={this.handleSubmit}>
+        <form ref="form" action={this.formAction()} method={this.formMethod()} onSubmit={this.handleSubmit}>
           {optionNodes}
           <input type="hidden" name="questionIndex"
                  value={this.questionIndex()}/>

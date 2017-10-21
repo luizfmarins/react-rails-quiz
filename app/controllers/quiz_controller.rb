@@ -1,5 +1,7 @@
 class QuizController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token
+
   def index
     if (isFirstAccess())
       @presenter = presenter(0);
@@ -46,9 +48,13 @@ class QuizController < ApplicationController
       :questionIndex => questionIndex,
       :isFinalQuestion => questionIndex === 1,
       :form => {
-        :action => 'quiz'
+        :nextQuestionAction => 'quiz',
       }
     };
+  end
+
+  def create
+    redirect_to '/results'
   end
 
   def updateAnswer(questionIndex, quizChoice)
