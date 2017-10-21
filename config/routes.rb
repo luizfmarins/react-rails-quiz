@@ -1,4 +1,4 @@
 SampleReactRailsApp::Application.routes.draw do
-  resources :comments
-  root :to => redirect("/comments")
+  resources :quiz
+  root :to => redirect("/quiz")
 end
