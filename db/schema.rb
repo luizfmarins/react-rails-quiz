@@ -16,6 +16,12 @@ ActiveRecord::Schema.define(version: 20140315030553) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "answers", force: true do |t|
+    t.integer "option_id"
+  end
+
+  add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
+
   create_table "comments", force: true do |t|
     t.string   "author"
     t.text     "text"

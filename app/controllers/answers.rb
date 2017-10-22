@@ -9,12 +9,8 @@ class Answers
   end
 
   def persist
-    @answers.each { |key, value|
-      Answer.create({
-                            :question_id => key,
-                            :question_answer=> value
-                          }
-      );
-    }
+    @answers.each {|key, value|
+      Answer.create({:option_id => value});
+    };
   end
 end

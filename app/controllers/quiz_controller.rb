@@ -20,33 +20,16 @@ class QuizController < ApplicationController
   end
 
   def presenter(questionIndex)
+    questions = Question.all.collect {|q|
+      questionHash = q.attributes;
+      questionHash[:quizOptions] = q.options.collect {|o| o.attributes };
+      questionHash;
+    };
+
     return {
-      :quizQuestions => [
-        {
-          :quizOptions => [
-            {
-              :id => 'op1',
-              :text => 'Option 1'
-            },
-            {
-              :id => 'op2',
-              :text => 'Option 2'
-            }
-          ]},
-        {
-          :quizOptions => [
-            {
-              :id => 'op3',
-              :text => 'Option 3'
-            },
-            {
-              :id => 'op4',
-              :text => 'Option 4'
-            }
-          ]}
-      ],
+      :quizQuestions => questions,
       :questionIndex => questionIndex,
-      :isFinalQuestion => questionIndex === 1,
+      :isFinalQuestion => questionIndex === questions.length - 1,
       :form => {
         :nextQuestionAction => 'quiz',
       }

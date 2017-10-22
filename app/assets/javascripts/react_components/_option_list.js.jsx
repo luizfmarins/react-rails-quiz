@@ -4,7 +4,6 @@ var OptionList = React.createClass({
     var state = JSON.parse(this.props.presenter);
     state.selectedOption = "";
 
-    console.log(state);
     return state;
   },
 
@@ -29,7 +28,7 @@ var OptionList = React.createClass({
     return this.state.form.nextQuestionAction;
   },
 
-  questions: function () {
+  question: function () {
     return this.state.quizQuestions[this.state.questionIndex];
   },
 
@@ -44,7 +43,7 @@ var OptionList = React.createClass({
   render: function () {
     var self = this;
 
-    var optionNodes = this.questions().quizOptions.map(function (op) {
+    var optionNodes = this.question().quizOptions.map(function (op) {
       return <QuizOption opId={op.id} text={op.text}
                          handleOptionChange={self.handleOptionChange}
                          getSelectedOption={self.getSelectedOption}/>
@@ -53,6 +52,7 @@ var OptionList = React.createClass({
     return (
       <div>
         <form ref="form" action={this.formAction()} method={this.formMethod()} onSubmit={this.handleSubmit}>
+          <p>{this.question().text}</p>
           {optionNodes}
           <input type="hidden" name="questionIndex"
                  value={this.questionIndex()}/>
