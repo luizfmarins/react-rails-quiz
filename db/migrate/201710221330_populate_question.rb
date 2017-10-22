@@ -4,7 +4,7 @@ class PopulateQuestion < ActiveRecord::Migration
       question = Question.create(text: "question #{i}");
       j = 1;
       while(j <= 2 or j <= i)
-        questionText = "question #{i} - option #{j}";
+        questionText = "option #{j}";
         Option.create(text: questionText, question_id: question.id)
         j = j + 1;
       end
