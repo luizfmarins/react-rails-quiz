@@ -5,8 +5,7 @@ class QuizController < ApplicationController
   def index
     if (userAlreadyAnswered())
       redirect_to '/results'
-    end
-    else if (isFirstAccess())
+    elsif (isFirstAccess())
       @presenter = presenter(0);
       session[:answers] = Answers.new;
     else
