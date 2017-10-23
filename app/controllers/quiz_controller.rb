@@ -3,7 +3,10 @@ class QuizController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    if (isFirstAccess())
+    if (userAlreadyAnswered())
+      redirect_to '/results'
+    end
+    else if (isFirstAccess())
       @presenter = presenter(0);
       session[:answers] = Answers.new;
     else
@@ -45,6 +48,8 @@ class QuizController < ApplicationController
 
       session[:answers].persist()
 
+      cookies[:alreadyAnswered] = 'true'
+
       redirect_to '/results'
     else
       redirect_to action: "index", questionIndex: params[:questionIndex], quizOption: params[:quizOption]
@@ -57,5 +62,9 @@ class QuizController < ApplicationController
 
   def isFirstAccess()
     return !params[:questionIndex].present?;
+  end
+
+  def userAlreadyAnswered()
+    return cookies[:alreadyAnswered].present?;
   end
 end
