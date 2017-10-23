@@ -47,7 +47,7 @@ class QuizController < ApplicationController
 
       redirect_to '/results'
     else
-      redirect_to quiz_path
+      redirect_to action: "index", questionIndex: params[:questionIndex], quizOption: params[:quizOption]
     end
   end
 
